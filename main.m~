@@ -1,0 +1,19 @@
+pointCloud = inputPointCloud('Results/XYZ.csv');
+cameraIntrinsic = inputCameraIntrinsic('Results/CameraIntrinsic.csv');
+poses = inputPoses('Results/Pose.csv');
+
+[normVector, inliers, planeBasis, centroid] = ransac(pointCloud);
+
+%# create x,y
+[xx,yy]=ndgrid(1:30,1:10);
+
+%# calculate corresponding z
+z = (-normVector(1)*xx - normVector(2)*yy - dot(normVector,centroid))/normVector(3);
+
+%# plot the surface
+figure
+hold on
+%surf(xx,yy,z)
+scatter3(pointCloud(:,1),pointCloud(:,2),pointCloud(:,3))
+hold off
+rotate3d on

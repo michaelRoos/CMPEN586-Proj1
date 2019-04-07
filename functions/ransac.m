@@ -1,9 +1,9 @@
-function [plane] = ransac(points)
+function [normVector, inliers, planeBasis, centroid] = ransac(points)
 %RANSAC Identify most dominant plane in the image
 %   Use ransac to find the plane that contains the most amount of points
 maxNormVector = [0,0,0];maxD=0;
 maxInliers = 0;
-t = 10;
+t = .01;
     for n = 1:5000
         % Randomly sample 3 unique points
         sampledPoints = datasample(points,3,'Replace',false);
@@ -34,7 +34,24 @@ t = 10;
            end
         end
     end
-    plane = horzcat(maxNormVector,maxD);
+ 
+    
+    inliers = zeros(maxInliers,3);
+    index = 1;
+    for pointIndex = 1:length(points)
+        point = points(pointIndex,:);
+        if abs( dot(point,maxNormVector) + maxD ) < t
+            inliers(index,:) = point;
+            index = index + 1;
+        end
+    end
+    % Use pre-existing function to get best fit plane for increased accuracy
+    [normVector,planeBasis,centroid] = fitPlane(inliers);
+    
+    
+       
+    
+    
     
 
 end
