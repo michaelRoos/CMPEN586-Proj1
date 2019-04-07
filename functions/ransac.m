@@ -3,7 +3,7 @@ function [normVector, inliers, planeBasis, centroid] = ransac(points)
 %   Use ransac to find the plane that contains the most amount of points
 maxNormVector = [0,0,0];maxD=0;
 maxInliers = 0;
-t = .01;
+t = .5;
     for n = 1:5000
         % Randomly sample 3 unique points
         sampledPoints = datasample(points,3,'Replace',false);
@@ -17,6 +17,7 @@ t = .01;
 
         % Identify the plane norm as the cross product of two internal vectos
         normVector = cross(v1, v2);
+        normVector = normVector / norm(normVector);
         %Calculate d
         d = -1 * dot(normVector, p3);
         
@@ -26,15 +27,16 @@ t = .01;
            if abs( dot(point,normVector) + d ) < t
                inlierCount = inlierCount + 1;
            end
-           
-           if inlierCount > maxInliers
-               maxInliers = inlierCount;
-               maxNormVector = normVector;
-               maxD = d;
-           end
         end
+        if inlierCount > maxInliers
+           maxInliers = inlierCount;
+           maxNormVector = normVector;
+           maxD = d;
+       end
     end
- 
+    disp(maxInliers)
+    disp(maxNormVector)
+    disp(maxD)
     
     inliers = zeros(maxInliers,3);
     index = 1;
@@ -47,7 +49,7 @@ t = .01;
     end
     % Use pre-existing function to get best fit plane for increased accuracy
     [normVector,planeBasis,centroid] = fitPlane(inliers);
-    
+    disp(size(inliers))
     
        
     

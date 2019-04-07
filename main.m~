@@ -40,9 +40,9 @@ z = (-normVector(1)*xx - normVector(2)*yy + dot(normVector,centroid))/normVector
 %# plot the surface
 figure
 hold on
-% surf(xx,yy,z)
-scatter3(pointCloud(:,1),pointCloud(:,2),pointCloud(:,3),'b')
-% scatter3(inliers(:,1),inliers(:,2),inliers(:,3), 'r')
-% scatter3(centroid(1),centroid(2),centroid(3), 'g')
+surf(xx,yy,z)
+%scatter3(pointCloud(:,1),pointCloud(:,2),pointCloud(:,3))
+scatter3(inliers(:,1),inliers(:,2),inliers(:,3), 'r')
+scatter3(centroid(1),centroid(2),centroid(3), 'g')
 hold off
 rotate3d on
