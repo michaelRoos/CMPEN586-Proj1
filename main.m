@@ -1,6 +1,6 @@
 pointCloud = inputPointCloud('Results/XYZ.csv');
 cameraIntrinsic = inputCameraIntrinsic('Results/CameraIntrinsic.csv');
-poses = inputPoses('Results/Pose.csv');
+[poses, positions]= inputPoses('Results/Pose.csv');
 
 [normVector, inliers, planeBasis, centroid] = ransac(pointCloud);
 
@@ -8,7 +8,7 @@ poses = inputPoses('Results/Pose.csv');
 localToWorldMatrix = localToWorld(normVector, planeBasis, centroid);
 worldToLocalMatrix = worldToLocal(normVector, planeBasis, centroid);
 
-
+projected = project(pointCloud, poses(:,:,1), cameraIntrinsic);
 
 
 
