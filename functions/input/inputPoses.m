@@ -6,7 +6,6 @@ posesInput = reshape(posesInput,[],7);
 [numPictures,~] = size(posesInput);
 poseMatrices = zeros(3,3,numPictures);
 positions = zeros(3, numPictures);
-
 for i = 1:numPictures
    inputLine = posesInput(i,:);
    rotationQuaternion = inputLine(1:4); 

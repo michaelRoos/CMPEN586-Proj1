@@ -1,6 +1,7 @@
 pointCloud = inputPointCloud('Results/XYZ.csv');
 cameraIntrinsic = inputCameraIntrinsic('Results/CameraIntrinsic.csv');
-[poses, positions]= inputPoses('Results/Pose.csv');
+[cameraExternal, positions]= inputPoses('Results/Pose.csv');
+imgNames = inputNames('Results/Names.txt');
 
 [normVector, inliers, planeBasis, centroid] = ransac(pointCloud);
 
@@ -8,13 +9,25 @@ cameraIntrinsic = inputCameraIntrinsic('Results/CameraIntrinsic.csv');
 localToWorldMatrix = localToWorld(normVector, planeBasis, centroid);
 worldToLocalMatrix = worldToLocal(normVector, planeBasis, centroid);
 
-projected = project(pointCloud, poses(:,:,1), cameraIntrinsic);
+
+ 
+[boxLocal, boxWorld] = generateVirtualBox(localToWorldMatrix);
 
 
+% i = 1;
+% name = char(imgNames(i));
+% imgPath = strcat('Source Images/',name);
+% imshow(imgPath);
+% hold on
+% projectOnImage(pointCloud, cameraExternal(:,:,i), cameraIntrinsic);
+% hold off
 
-
-
-
+%# plot the surface
+figure
+hold on
+scatter3(pointCloud(:,1),pointCloud(:,2),pointCloud(:,3))
+hold off
+rotate3d on
 
 
 
