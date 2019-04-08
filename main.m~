@@ -14,12 +14,12 @@ worldToLocalMatrix = worldToLocal(normVector, planeBasis, centroid);
 [boxLocal, boxWorld] = generateVirtualBox(localToWorldMatrix);
 
 
-i = 5;
+i = 1;
 name = char(imgNames(i));
 imgPath = strcat('Source Images/',name);
 imshow(imgPath);
 % projectOnImage(pointCloud, cameraExternal(:,:,i), cameraIntrinsic, 'b');
-drawCube(boxWorld, cameraExternal(:,:,i), cameraIntrinsic);
+% drawCube(boxWorld, cameraExternal(:,:,i), cameraIntrinsic);
 
 % projectOnImage(boxWorld, cameraExternal(:,:,i), cameraIntrinsic,'b');
 % projectOnImage([0 0 0;0 0 0; 0 0 0], cameraExternal(:,:,i), cameraIntrinsic,'r');

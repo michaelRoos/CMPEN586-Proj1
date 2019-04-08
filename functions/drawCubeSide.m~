@@ -1,0 +1,10 @@
+function [] = drawCubeSide(corners, externalMatrix, internalMatrix)
+%DRAWCUBESIDE Summary of this function goes here
+%   Detailed explanation goes here
+projectedCorners = project(corners, externalMatrix, internalMatrix);
+disp(pro
+hold on
+fill(projectedCorners(1,:), projectedCorners(2,:), 1);
+hold off
+end
+

@@ -34,10 +34,7 @@ t = .5;
            maxD = d;
        end
     end
-    disp(maxInliers)
-    disp(maxNormVector)
-    disp(maxD)
-    
+
     inliers = zeros(maxInliers,3);
     index = 1;
     for pointIndex = 1:length(points)
@@ -49,7 +46,6 @@ t = .5;
     end
     % Use pre-existing function to get best fit plane for increased accuracy
     [normVector,planeBasis,centroid] = fitPlane(inliers);
-    disp(size(inliers))
     
        
     
