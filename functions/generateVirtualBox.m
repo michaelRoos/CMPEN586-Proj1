@@ -1,29 +1,18 @@
 function [boxLocal,boxWorld] = generateVirtualBox(localToWorldMatrix)
-%GENERATEVIRTUALBOX Summary of this function goes here
-%   Detailed explanation goes here
+%GENERATEVIRTUALBOX Generates corners of 2x2x1 virtual box and converts to
+% world coordinates.
 
-% 
-% x = -1:.05:1;
-% y = -1:.05:1;
-% z = -1:.05:0;
-% [X,Y,Z] = meshgrid(x,y,z);
-% 
-% X = reshape(X,[],1);
-% Y = reshape(Y,[],1);
-% Z = reshape(Z,[],1);
-% 
-% boxLocal = horzcat(X,Y,Z);
-
+% Local coordinates of box corners.
 boxLocal = [-1 -1 0; -1 1 0; 1 1 0; 1 -1 0; -1 -1 1; -1 1 1; 1 1 1; 1 -1 1;]; 
-
+% Matrix to hold result
 boxWorld = zeros(size(boxLocal));
 for i = 1:length(boxLocal)
+   % Convert point into homogenous vector
    localPoint = horzcat(boxLocal(i,:),1)';
+   % Transform into world coordinates
    worldPoint = localToWorldMatrix * localPoint;
-   wx = worldPoint(1) / worldPoint(4);
-   wy = worldPoint(2) / worldPoint(4);
-   wz = worldPoint(3) / worldPoint(4);
-   boxWorld(i,:) = [wx,wy, wz];
+   % Convert out of homogenous vector and save
+   boxWorld(i,:) = worldPoint(1:3) / worldPoint(4);
 end
 end
 

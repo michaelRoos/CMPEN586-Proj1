@@ -1,3 +1,6 @@
+% Finding a best fit plane was not required, only the result of ransac.
+% However, for best results, a OLS function was used to identify the best
+% plane to fit the inliers.
 function [n,V,p] = fitPlane(X)
     %Computes the plane that fits best (lest square of the normal distance
     %to the plane) a set of sample points.

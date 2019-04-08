@@ -1,7 +1,9 @@
 function [pixelPoints] = project(points, externalMatrix, internalMatrix)
-%PROJECT\ Summary of this function goes here
-%   Detailed explanation goes here
+%PROJECT Top level function to convert world coords to pixel coords
+
+% Convert world coordinates to camera coordinates
 cameraPoints = worldToCamera(points, externalMatrix);
+% Project camera coordinates to pixel coordinates
 pixelPoints = cameraToPixel(cameraPoints, internalMatrix);
 end
 
